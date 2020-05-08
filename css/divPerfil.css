@@ -1,0 +1,55 @@
+/************************DIV PERFIL*********************************/
+#divPerfil{
+    position: fixed;
+    right: 0;
+    top: 80px;
+    width: 225px;
+    z-index: 100;
+    background-color: white;
+    clip-path: polygon(0 3%, 100% 0%, 100% 100%, 0 97%);
+    transition: .5s;
+}
+#divPerfil > img{
+    width: 100%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 85%);
+
+}
+#perfil{
+    text-align: center;
+    font-size: 1.7em;
+    padding-bottom: 5px;
+    margin: 20px;
+    margin-top: 0;
+    word-wrap: break-word;
+}
+#perfil > i{
+    padding: 0 5px;
+}
+.btnConfPerfil{
+    color: rgb(88, 88, 88);
+    cursor: pointer;
+}
+.btnConfPerfil.movil{
+    display: none;
+}
+@media(max-width:700px){
+
+    #divPerfil img, #divPerfil p, #divPerfil a{
+        display:none;
+    }
+    .btnConfPerfil:first-of-type{
+        display:none;
+    }
+    #divPerfil{
+        width: auto;
+    }
+    #perfil{
+        margin: auto;
+    }
+    
+    .btnConfPerfil.movil{
+        display: block;
+        margin: 15px!important;
+    }
+
+}

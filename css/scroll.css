@@ -1,0 +1,13 @@
+#scroll{
+    background: #0072ff; 
+    background: -webkit-linear-gradient(to bottom, #00c6ff, #0072ff);  
+    background: linear-gradient(to bottom, #00c6ff, #0072ff);
+    position: fixed;
+    right: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 20000;
+    height: 95vh;
+    width: 6px;
+    border-radius: 50px;
+}

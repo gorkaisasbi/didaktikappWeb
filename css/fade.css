@@ -1,0 +1,133 @@
+/*********************ANIMACION ENTRE PAGINAS**************************/
+#fade{
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    width: 100vw;
+    height: 100vh;
+    transition: 0.3s;
+    opacity: 1;
+    display: block;
+    z-index: 3000;
+}
+
+#carga{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    z-index: 1;
+}
+#carga > span{
+    width: 10px;
+    height: 5px;
+    background: -webkit-linear-gradient(bottom, #00c6ff, #0072ff);
+    background: -o-linear-gradient(bottom, #00c6ff, #0072ff);
+    background: linear-gradient( bottom, #00c6ff, #0072ff);
+    background-color: white;
+    margin: 0 5px;
+    animation: an .8s infinite linear;
+}
+#carga > span:nth-of-type(2){
+    animation-delay: .1s;
+}
+#carga > span:nth-of-type(3){
+    animation-delay: .2s;
+}
+#carga > span:nth-of-type(4){
+    animation-delay: .3s;
+}
+#carga > span:nth-of-type(5){
+    animation-delay: .4s;
+}
+#carga > span:nth-of-type(6){
+    animation-delay: .5s;
+}
+
+@keyframes an{
+    0%{
+        transform: scaleY(1);
+    }
+     25%{
+        transform: scaleY(15);
+     }
+     50%{
+        transform: scaleY(1);
+    }
+    100%{
+        transform: scaleY(1);
+    }
+
+} 
+
+
+.loader {
+  margin: 0 auto;
+  width: 60px;
+  height: 50px;
+  text-align: center;
+  font-size: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%) scale(3);
+}
+.loader > div {
+  height: 100%;
+  width: 8px;
+  display: inline-block;
+  float: left;
+  margin-left: 2px;
+  -webkit-animation: delay 0.8s infinite ease-in-out;
+  animation: delay 1s infinite ease-in-out;
+}
+.loader .bar1 {
+  background-color: #0072ff;
+}
+.loader .bar2 {
+  background-color: #00c6ff;
+  -webkit-animation-delay: -.9s;
+  animation-delay: -.9s;
+}
+.loader .bar3 {
+  background-color: #0072ff;
+  -webkit-animation-delay: -.8s;
+  animation-delay: -.8s;
+}
+.loader .bar4 {
+  background-color: #00c6ff;
+  -webkit-animation-delay: -.7s;
+  animation-delay: -.7s;
+}
+.loader .bar5 {
+  background-color: #0072ff;
+  -webkit-animation-delay: -.6s;
+  animation-delay: -.6s;
+}
+.loader .bar6 {
+  background-color: #00c6ff;
+  -webkit-animation-delay: -.5s;
+  animation-delay: -.5s;
+}
+
+@-webkit-keyframes delay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.05);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes delay {
+  0%, 40%, 100% {
+    transform: scaleY(0.05);
+    -webkit-transform: scaleY(0.05);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}

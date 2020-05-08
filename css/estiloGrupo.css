@@ -1,0 +1,275 @@
+#divSession{
+    position: fixed;
+    right: 40px;
+    top: 40px;
+}
+
+#mapSide{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    transition: .5s;
+    background-color: rgb(40,40,40);
+    z-index: -2;
+}
+
+#mapaGrupo{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -2;
+}
+#barraActs{
+    position: fixed;
+    left: 0;
+    bottom: 0%;
+    width: 100%;
+    margin: 0;
+}
+#barraActs > ul{
+    width: 100%;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(0,0,0,.1);
+    border-radius: 10px;
+}
+#barraActs > ul > li{
+    margin: 10px 0;
+    cursor: pointer;
+    position: relative;
+    padding: 10px;
+    border-bottom: 2px solid transparent;
+    border-radius: 10px;
+}
+#barraActs > ul > li:hover .descAct{
+    display: block;
+    
+}
+#barraActs > ul > li:hover{
+    border-color: #0072ff;
+}
+.actActivo{
+    border-color: #0072ff!important;
+}
+
+.descAct{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%,-110%);
+    width: 400%;
+    text-align: center;
+    padding: 5px;
+}
+.descAct > p{
+    margin: 0;
+    padding: 10px;
+    background-color: #0072ff;
+    border-radius: 10px;
+    color: white;
+}
+.rabillo{
+    position: relative;
+    width: 50px;
+    height: 20px;
+    left: 50%;
+    top: -2px;
+    transform: translateX(-50%);
+    background-color: #0072ff;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+
+}
+#titAct > h1{
+    font-size: 3.4em;
+}
+#titAct{
+    color: white;
+    margin: 25px;
+    width: fit-content;
+    max-width: 50%;
+    word-wrap: break-word;
+    position: fixed;
+    top: 0;
+    transition: .3s;
+}
+.marker > div{
+    color: white;
+    padding: 15px;
+    font-size: 3em;
+    transform: translateY(-50%);
+    position: relative;
+    cursor: pointer;
+}
+.markerInactivo .backMarker{
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0),grey)!important;
+}
+.backMarker{
+    position: absolute;
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0),#0072ff);
+    clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
+    width: 100%;
+    height: 50%;
+    top: 50%;
+    left: 0;
+    z-index: -1;
+}
+.infoMarker{
+    transform: translateY(-20%);
+
+}
+.marker:hover > .infoMarker{
+    transform: translateY(-60%);
+}
+
+#barraLateral{
+    width: 7px;
+    height: 50vh;
+    position: fixed;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 10px;
+    background-color: rgba(0,0,0,.5);
+    font-size: 1.5em;
+    color: white;
+}
+#barraLateral > i{
+    position: absolute;
+    right: 100%;
+    transform: translateY(-50%);
+    margin-right: 10px;
+    cursor: pointer;
+}
+#barraLateral > i:first-of-type{
+    top: 25%;
+}
+#barraLateral > i:last-of-type{
+    top: 75%;
+}
+#indicador{
+    background-color: greenyellow;
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    border-radius: 10px;
+    transition: .5s;
+}
+#blockModalAct{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,.5);
+    z-index: 99;
+    opacity: 0;
+    display: none;
+}
+.modalMapa{
+    position: absolute;
+    z-index: 100;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%) scale(.2);
+    opacity: 0;
+    display: none;
+    width: 80%;
+    height: 70vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 20px 10px rgba(0,0,0,.5);
+    transition: .3s;
+    overflow: hidden;
+}
+.modalMapa > div:first-of-type{
+    background-color: red;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.modalMapa > div:first-of-type > img{
+    width: 50%;
+
+}
+.modalMapa h3{
+    background-color: white;
+}
+.modalMapa .infoAct{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow-y: overlay;
+    z-index: -1;
+}
+.infoAct > div{
+    height: 200%;
+}
+
+#navMovil{
+    position: fixed;
+    width: 0px;
+    height: 0px;
+    top: 50%;
+    left: 50%;
+    color: white;
+    font-size: 3em;
+    border-radius: 50%;
+    border: 2px solid greenyellow;
+    display: none;
+    transform: translate(-50%,-50%);
+    transition: .3s;
+    opacity: 0;
+    z-index: 10;
+}
+#navMovil i, #navMovil div{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    width: 100%;
+}
+#navMovil i:first-of-type{
+    top: 0%;
+    left: 50%;
+}
+#navMovil i:nth-child(2){
+    top: 100%;
+    left: 50%;
+}
+#l{
+    top: 50%!important;
+    left: 0%!important;
+}
+#r{
+    top: 50%!important;
+    left: 100%!important;
+}
+#blockMovil{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9;
+    background-color: rgba(0,0,0,.5);
+    display: none;
+    opacity: 0;
+    transition: .3s;
+}

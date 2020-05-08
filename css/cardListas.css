@@ -1,0 +1,34 @@
+.dashCard .sec{
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+
+.rightNav{
+    position: absolute;
+    right: 5px;
+    height: 85%;
+    width: 5px;
+    background-color: rgb(50,50,50);
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.rightNav p{
+    position: relative;
+    right: 250%;
+    cursor: pointer;
+}
+.latPos{
+    width: 100%;
+    position: absolute;
+    background-color: #00c6ff;
+    height: 100%;
+    border-radius: 5px;
+    top: 0;
+    transition: .3s;
+}

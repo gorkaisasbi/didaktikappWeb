@@ -1,0 +1,149 @@
+#divListas{
+    position: fixed;
+    left: -85%;
+    top: 0;
+    width: 85%;
+    height: 100vh;
+    transition: .5s;
+    z-index: 100;
+}
+#slapListas{
+    position: absolute;
+    left: 100%;
+    font-size: 2em;
+    transform: translateX(-1px);
+    background-color: white;
+    top: 80px;
+    padding: 20px;
+    clip-path: polygon(0 0%, 100% 3%, 100% 97%, 0 100%);
+    cursor: pointer;
+}
+#divListas > .info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+#divListas > .info > #backInfo{
+    background-color: white;
+    clip-path: polygon(0 0%, 97% 0%, 100% 80px, 100% 150px, 97% 100%, 0 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+#backListas{
+    position: fixed;
+    display: none;
+    top: 20px;
+    right: 20px;
+    transform: rotateY(180deg);
+    font-size: 2.5em;
+    color:  #0072ff;
+    cursor: pointer;
+    opacity: 0;
+    transition: .5s;
+}
+#blockListas{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .7);
+    opacity: 0;
+    z-index: 1;
+    transition: opacity .5s;
+    display: none;
+}
+#btnCrearLista{
+    border: none!important;
+}
+#listListas {
+    height: 85%;
+    overflow-y: overlay;
+}
+#listListas i{
+    font-size: 2.5em;
+}
+.lista{
+    cursor: pointer;
+    width: 100%;
+    transition: .5s;
+}
+.trans{
+    transition: .5s;
+    
+}
+.contLista{
+    width: 100%;
+    top: 0%;
+    left: 0%;
+    transform: translate(-0%,-0%);
+    position: relative;
+}
+.lista #listaGrupos{
+    display: none;
+    overflow-y: scroll;
+}
+.lista #listaGrupos .divGrupo{
+    background-color: transparent;
+    border-color: transparent;
+    color: #0072ff;
+    border-radius: 0;
+    border-bottom: 1px solid grey;
+    font-size: 1.5em;
+}
+.lista #listaGrupos .divGrupo p{
+    color: black;
+
+}
+.lista input{
+    display: none;
+    width: 0%;
+    margin: auto;
+    margin-top: 10px;
+    text-align: center;
+    border:none;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    transition: .3s;
+}
+
+#divCrearLista{
+    width: 100%;
+    text-align: center;
+    height: 0;
+    overflow: hidden;
+    transition: .3s;
+}
+#divCrearLista input{
+    text-align: center;
+    border:none;
+    border-left: 2px solid #0072ff;
+    border-right: 2px solid #0072ff;
+    margin: 10px auto;
+}
+#inBuscarLista{
+    width: 0;
+    padding: 0;
+    border-color: transparent;
+    transition: .3s;
+    border: none;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    text-align: center;
+}
+#btnBuscarListas{
+    cursor: pointer;
+    font-size: 1.5em;
+}
+#inBuscarLista:focus{
+    outline: none;
+}
+.eliminarLista{
+    border: none!important;
+}

@@ -1,0 +1,122 @@
+#addCard{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    clip-path: circle(5% at 0% 100%);
+    background-color: rgba(255, 255, 255, 0.7);
+    transition: .3s;
+    opacity: 1;
+    text-align: center;
+    z-index: 101;
+}
+
+.addActivo:hover{
+    clip-path: circle(200% at 0% 100%)!important;
+    background-color: rgba(30, 30, 30, 0.9)!important;
+    color: white;
+} 
+#addCard > i{
+    position: absolute;
+    bottom: 1%;
+    left: 1%;
+    font-size: 2em;
+    cursor: pointer;
+}
+.outAddCard{
+    clip-path: circle(0% at 0% 100%)!important;
+}
+.cardAdd{
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding:20px;
+    margin: 10px;
+}
+.templateChart{
+    font-size: 10em!important;
+    padding:10px;
+}
+.contTemplates{
+    height: 90%;
+    overflow: overlay;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+#blockAddBuscar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 1;
+    display: none;
+    opacity: 0;
+}
+
+#addBuscarGrupo{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 70%;
+    transform: translate(-50%,-50%) scale(.1);
+    background-color: white;
+    border-radius: 10px;
+    transition: .3s;
+    display: none;
+    opacity: 0;
+    z-index: 2;
+}
+
+#inBuscarAdd{
+    width: 90%;
+    background-color: rgba(30,30,30,.1);
+    border: none;
+    border-left: 2px solid #0072ff;
+    border-right: 2px solid #0072ff;
+    text-align: center;
+    font-size: 1.2em;
+}
+#listaGruposAdd{
+    width: 100%;
+    height: 80%;
+    overflow-y: overlay;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.divGrupoAdd{
+    background-color: transparent!important;
+    width: 70%!important;
+    border-radius: 0!important;
+    border: none;
+    border-bottom: 1px solid grey!important;
+    color: black!important;
+    font-size: 1.5em;
+    margin: auto!important;
+    
+}
+.divGrupoAdd i{
+    color: #0072ff;
+
+}
+.divGrupoAdd:last-of-type{
+    border-bottom: none!important;
+
+}
+
+@media(max-width: 700px) and (orientation: portrait){
+    #addCard{
+        clip-path: circle(10% at 0% 100%);
+    }
+    #addCard > i{
+        bottom: 2%;
+        left: 2%;
+    }
+
+}

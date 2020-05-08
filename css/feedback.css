@@ -1,0 +1,14 @@
+#feedback{
+    position: fixed;
+    top: -150px;
+    margin-top: 70px;
+    left: 50%;
+    padding: 10px 20px;
+    background-color: rgba(0, 200, 0, .7);
+    z-index: 999;
+    border-radius: 10px;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: .3s;
+    color: white;
+}
