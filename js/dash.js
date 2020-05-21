@@ -43,13 +43,7 @@ $(document).ready(()=>{
 
       /********************MOVERSE POR APP CON TECLADO************************/ 
       $mayus = false;
-      $tSpeech = null;
       this.document.onkeydown = (e)=>{
-        if(e.keyCode == 18 && $speechActivo){
-            $tSpeech = setTimeout(()=>{
-                    recog.start();
-            },1000);
-        }
         if(e.keyCode==39 && $mayus){
             if(!$abiertoListas){
                 feedMover("feedPerfil");
@@ -83,9 +77,6 @@ $(document).ready(()=>{
 
     this.document.onkeyup = (e)=>{
         if(e.keyCode == 16)$mayus = false;
-        if(e.keyCode == 18){
-            if($tSpeech!=null)clearTimeout($tSpeech);
-        }
         
     };
 
@@ -447,6 +438,7 @@ function cargarCards(){
             if(window.mobileCheck())ui.size.width = ui.originalSize.width;
         }
     });
+    
 
     $(".rightNav p").on("click touchstart",(e)=>{
         $id = e.currentTarget.id.substr("sec".length);
@@ -461,9 +453,11 @@ function cargarCards(){
 
     for(i=0;i<$(".dashCard .cardInfo").length;i++){
         var element = $($(".dashCard .cardInfo")[i]);
-        var childs = $($(".dashCard .cardInfo")[0]).children().length;
+        var childs = $($(".dashCard .cardInfo")[i]).children().length;
         element.css("height",childs+"00%");
-        $($(".dashCard .cardInfo")[0]).children().css("height", 100/childs+"%" );
+        $($(".dashCard .cardInfo")[i]).children().css("height", 100/childs+"%" );
+        var $idPadre = element.parent()[0].id;
+        $("#"+$idPadre+" .latPos").css("height",$("#"+$idPadre+" .rightNav").height()/$("#"+$idPadre+" .sec").length);
 
     }
 

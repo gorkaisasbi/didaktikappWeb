@@ -4,5 +4,5 @@
 /opt/lampp/lampp startftp
 inotifywait -m /opt/lampp/proftpd/didaktikapp -e create |
 while read events; do
-	php /home/isasbi/Escritorio/test.php >> /home/isasbi/logsPrueba.txt; 
+	php /opt/lampp/proftpd/didaktikapp/test.php >> /opt/lampp/proftpd/logsDidaktikapp.txt; 
 done

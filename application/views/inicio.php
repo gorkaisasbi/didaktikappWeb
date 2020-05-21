@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="css/estilo.css"/>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/inicio.js"></script>
     <script src="js/Chart.bundle.min.js"></script>
     <script src="js/aos.js"></script>
     <link rel="stylesheet" href="css/Chart.min.css"/>
     <link rel="stylesheet" href="css/animate.css"/>
     <link rel="stylesheet" href="css/aos.css"/>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <script src="https://kit.fontawesome.com/ceb06c1ab7.js" crossorigin="anonymous"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.js"></script>
     <link href="https://api.mapbox.com/mapbox-gl-js/v1.6.1/mapbox-gl.css" rel="stylesheet" />
@@ -24,7 +26,11 @@
     <body>
        <div id="fondo_titulo">
             <div id="titDiv" class="container animated fadeInLeft delay-2s">
-                <h1>Didaktik<span class="azul">app</span></h1>
+                <div class="d-flex">
+                    <h1>Didaktik<span class="azul">app</span></h1>
+                    <lottie-player class="align-self-end" src="https://assets4.lottiefiles.com/packages/lf20_JRUtDZ.json"  background="transparent"  speed="1"  
+                    style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
+                </div>
                 <p class="lead">Descubre todo lo que ofrece nuestra app</p>
             </div>
             <img alt="imagen" src="img/arrow.svg">
@@ -61,7 +67,10 @@
                         <canvas id="myChart"></canvas>
                     </div>
                     <div class="col-12 col-md-6 pb-5">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio obcaecati perspiciatis velit officiis, voluptates magnam corrupti ducimus. Rerum, corrupti unde excepturi cum consequatur neque perspiciatis alias vel sequi ipsa vero.</p>
+                        <p>Tendrás acceso a información detallada sobre todos los grupos de estudiantes que disfruten de la aplicación. 
+                        Tendrás disponibles todos los datos recogidos en la aplicación android en la web de inmediato, es casi como si estuvieras con ellos. 
+                        </p>    
+                        <p>Te proporcionamos la información de diferentes formas para mayor aclaración y seguimiento de tus estudiantes. </p>
                     </div>
                 </div>
                 <div class="col-12 mt-5" data-aos="fade-in" data-aos-anchor-placement="center-bottom">
@@ -69,7 +78,13 @@
                 </div>
             </div>
         </div>
-
+        <div id="divUltimosGrupos" class="container">
+            <h2 class=" " data-aos="fade-in">Grupos recientes</h2>
+            <div class="linea"></div>
+            <div id="ultimosGruposLista" class="row py-5 deckGrupos">
+            </div>
+            <a href="inicio/search" data-aos="fade-in" class="btn btn-block btn-outline-info w-50 m-auto">Buscar más</a>
+        </div>
         <div class="borderCurvo"></div>
         <div id="divCreadores" class="container-fluid">
             <div class="container">
@@ -83,7 +98,7 @@
                                 <div class="pathBorder"></div>
                             </div>
                             <p><b>RODRIGO ALONSO SOLAGUREN-BEASCOA</b></p>
-                            <p>Desarrolo Android</p>
+                            <p>Desarrollo Android</p>
                         </div>
                     </div>
                     <div class="col mb-4">
@@ -93,7 +108,7 @@
                                 <div class="pathBorder"></div>
                             </div>
                             <p><b>JOSE CARLOS LANCHO MARTIN</b></p>
-                            <p>Desarrolo Android</p>
+                            <p>Desarrollo Android</p>
                         </div>
                     </div>
                     <div class="col mb-4">
@@ -102,8 +117,8 @@
                                 <img src="img/user.svg"/>
                                 <div class="pathBorder"></div>
                             </div>
-                            <p><b>ASUN</b></p>
-                            <p>Desarrolo Android</p>
+                            <p><b>ASIER SUÁREZ</b></p>
+                            <p>Desarrollo Android</p>
                         </div>
                     </div>
                     <div class="col mb-4">
@@ -113,7 +128,7 @@
                                 <div class="pathBorder"></div>
                             </div>
                             <p><b>GORKA ISASBIRIBIL DELGADO</b></p>
-                            <p>Desarrolo Web</p>
+                            <p>Desarrollo Web</p>
                         </div>
                     </div>
                 </div>
@@ -127,24 +142,22 @@
                 <hr>
                 <div class="row mt-5">
                     <div class="col-8 col-md-6" >
-                        <p class="text-light" data-aos="fade-in">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dicta nemo, non beatae cupiditate ipsa iste, sapiente voluptatibus repellendus delectus, natus est dolores praesentium? Labore tempore impedit quaerat quibusdam fugiat neque?</p>
+                        <p class="text-light" data-aos="fade-in">Descarga la app en Google play store, disfruta de la cultura de la ciudad y vuelve para ver los datos de tu grupo.</p>
                     </div>
                     <div class="col-4 col-md-6 text-center mb-5">
                         <i style="font-size:9em" class="fab fa-google-play invert" data-aos="fade-in"></i>
                     </div>
                     <div class="col-0 col-md-3"></div>
                     <div class="col-12 col-md-6">
-                        <a class="btn btn-block btn-dark noFade" data-aos="fade-in" href="https://play.google.com/store/apps/details?id=com.app.didaktikapp">Descargar aplicación</a> 
+                        <a class="btn btn-block btn-dark noFade" data-aos="fade-in" data-aos-anchor-placement="top" href="https://play.google.com/store/apps/details?id=com.app.didaktikapp">Descargar aplicación</a> 
                     </div>
                     <div class="col-0 col-md-3"></div>
                 </div>
             </div>
+            <div id="botInicio" class="bg-success"></div>
         </div>
         
-        <div class="borderFooter bg-dark"></div>
-        <footer id="footerInicio" class="bg-dark">
-
-        </footer>
+        
         
 
            
@@ -153,20 +166,20 @@
                 var myChart = new Chart(ctx, {
                     type: 'line',
                     data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        labels: ['', '', '', '', '', ''],
                         datasets: [{
-                            label: 'Votes',
+                            label: '',
                             data: [12, 19, 3, 5, 2, 56],
                             backgroundColor: [
-                                'rgba(0,114,255,.2)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)'
+                                'rgba(0,114,255,.7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)'
                             ],
                             borderColor: [
-                                'rgba(0,114,255,1)',
+                                'rgba(0,0,0,0)',
                             ]
                         }]
                     },
@@ -174,7 +187,19 @@
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    display: false
+                                },
+                                gridLines:{
+                                    display: false
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    display: false
+                                },
+                                gridLines:{
+                                    display: false
                                 }
                             }]
                         },
@@ -187,17 +212,17 @@
                 var myChart = new Chart(ctx2, {
                     type: 'radar',
                     data: {
-                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                        labels: ['', '', '', '', '', ''],
                         datasets: [{
-                            label: 'Votes',
+                            label: '',
                             data: [12, 19, 3, 5, 2, 56],
                             backgroundColor: [
-                                'rgba(0,114,255,.2)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)',
-                                'rgba(0, 206, 0, 1)'
+                                'rgba(0,114,255,.7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)',
+                                'rgba(0,114,255, .7)'
                             ],
                             borderColor: [
                                 'rgba(0,114,255,1)',
@@ -208,7 +233,19 @@
                         scales: {
                             yAxes: [{
                                 ticks: {
-                                    beginAtZero: true
+                                    beginAtZero: true,
+                                    display: false
+                                },
+                                gridLines:{
+                                    display: false
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    display: false
+                                },
+                                gridLines:{
+                                    display: false
                                 }
                             }]
                         },
@@ -227,7 +264,7 @@
     container: 'fondo_titulo',
     style: 'mapbox://styles/mapbox/light-v10',
     center: [-2.411270, 43.032871],
-    zoom: 17.5,
+    zoom: 16,
     pitch: 65,
     interactive:false,
     attributionControl: false
@@ -336,18 +373,14 @@
     
 
     });
-    $coords = [{
-            'coordinates': [-2.411270, 43.032871]
-        },
-        {
-            'coordinates': [-2.411270, 43.033871]
-        },{
-            'coordinates': [-2.411270, 43.031871]
-        },{
-            'coordinates': [-2.411270, 43.032971]
-        },{
-            'coordinates': [-2.412270, 43.032871]
-        }];
+    $coords = [
+            {'coordinates': [-2.412889,43.035]},
+            {'coordinates': [-2.4139773845672607,43.03337631027518]},
+            {'coordinates': [-2.415447235107422,43.0342585638378]},
+            {'coordinates': [-2.416069507598877,43.0339684018436]},
+            {'coordinates': [-2.4158066511154175,43.03292145459449]},
+            {'coordinates': [-2.4140900373458862,43.03238032879034]}
+        ];
 		
     $reverse=false;
     $numLayer = 1;

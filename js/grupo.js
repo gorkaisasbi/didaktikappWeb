@@ -9,7 +9,7 @@ $(document).ready(()=>{
     if(window.innerWidth<700){
       $zoom=16.5;
     }
-    clearTimeout($tFade);
+
     $center = [-2.414270, 43.033371];
     mapboxgl.accessToken = 'pk.eyJ1IjoiZ29ya2Fpc2FzYmkiLCJhIjoiY2pwczA1eXhzMHJ2dDN4bXo3aW1yZzlnOCJ9.FK1iEuF4xGYwUOFeQDghlA';
     map = new mapboxgl.Map({
@@ -572,6 +572,8 @@ $(document).ready(()=>{
         ]
       ]);
     }
+
+
     map.on('load', function() {
     
         // Add 3d buildings and remove label layers to enhance the map
@@ -607,11 +609,11 @@ $(document).ready(()=>{
                 }
             });
 
-            $("#fade").css("opacity","0");
-        
-            setTimeout(()=>{
-                $("#fade").css("display","none");
-            },1000);
+          $("#fade").css("opacity","0");
+      
+          setTimeout(()=>{
+              $("#fade").css("display","none");
+          },1000);
         
 
     });
@@ -816,7 +818,9 @@ $(document).ready(()=>{
        yDown = null;                                             
    };
 
+   
 
+   setInterval(chechForUpdates,10000);
 
 
 });
@@ -915,6 +919,10 @@ function abrirActividad(n){
       $tAbrirAct  = setTimeout(()=>{
         $("#"+$n+".modalMapa").css("opacity","1");
         $("#"+$n+".modalMapa").css("transform","translate(-50%,-50%) scale(1)");
+        for(i=0;i<progressArr.length;i++){
+          progressArr[i].set(0);
+          progressArr[i].animate(progressVals[i]);
+        }
         if($n>0){
           $("#titAct").css("opacity",0);
           $("#blockModalAct").css("opacity","1");
@@ -938,3 +946,22 @@ function cerrarActs(){
   $("#chartSide").css("left","0%");  
 }
 
+
+function chechForUpdates(){
+
+  $.ajax({
+    url:"/main/checkUpdate/"+$grupo.idgrupo,
+    type:"GET",
+    success:(xhr)=>{
+
+        if(xhr>Object.keys($grupo.actividades).length){
+          console.log("actualizar");
+          abrirFeedback("Actualizaciones recientes, <a href='./"+$grupo.idgrupo+"'>actualizar</a>",null,true);
+        }
+    },
+    error:(xhr)=>{
+        console.log(xhr);
+    }
+});
+
+}

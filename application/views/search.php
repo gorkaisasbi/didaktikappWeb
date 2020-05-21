@@ -26,7 +26,7 @@
             </div>
         </div>
         </form>
-        <div id="listaGrupos" class="mt-2">
+        <div id="listaGrupos" class="mt-2 row deckGrupos">
         </div>  
     </div>
     <div class="col-1 col-md-2 p"></div>

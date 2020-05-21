@@ -17,6 +17,7 @@
     <script src="../../js/grupo.js"></script>
     <script src="../../js/Chart.bundle.min.js"></script>
     <script src="../../js/aos.js"></script>
+    <script src="../../js/progressbar.min.js"></script>
     <link rel="stylesheet" href="../../css/Chart.min.css"/>
     <link rel="stylesheet" href="../../css/animate.css"/>
     <link rel="stylesheet" href="../../css/aos.css"/>
@@ -108,13 +109,54 @@
                 <div class="col-1 col-md-2"></div>
             </div>
         <div id="mapSide">
+            <script>progressArr = [];progressVals = [];clearTimeout($tFade);</script>
             <?php
                 if(strlen($grupo->idAct1)>0){
             ?>
             <div id="1" class="modalMapa">
                 <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">Zumeltzegi dorrea</h3>
-                <div class="infoAct pt-5">
+                <div class="infoAct m-0">
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                    <h2 class="text-center ">Zumeltzegi dorrea<div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act1->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act1->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-5">
+                            <div class="col-12 mb-4">
+                                <h2>Preguntas</h2>
+                                <div class="linea"></div>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h4>¿Para que se construyó la torre?</h4>
+                                <p style="word-wrap: break-word; color:#0072ff;text-indent: 20px;"><?=$grupo->actividades->act1->foto1?></p>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <h4>¿Qué familia vivió en la casa torre desde el siglo XV?</h4>
+                                <p style="word-wrap: break-word; color:#0072ff;text-indent: 20px;"><?=$grupo->actividades->act1->foto2?></p>
+                            </div>
+
+                        </div>
+                        <?php
+                            if(strlen($grupo->actividades->act1->sopa)>0){
+                        ?>
+                        <div class="col-12 row mt-5">
+                            <div class="col-12 mb-4">
+                                <h2>Sopa de letras</h2>
+                                <div class="linea"></div>
+                            </div>
+                            <div class="col-12">
+                                <p style="font-size:1.5em">Ejercicio acabado en <?=$grupo->actividades->act1->sopa?></p>
+                            </div>
+                        </div>
+                        <?php
+                            }   
+                        ?>
+                    </div>
 
                 </div>
             </div>
@@ -126,9 +168,88 @@
             ?>
             <div id="2" class="modalMapa">
                 <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">San miguel parrokia</h3>
-                <div class="infoAct pt-5">
-                
+                <div class="infoAct m-0">
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                    <h2 class="text-center ">San miguel parrokia<div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act2->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act2->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-3">
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Preguntas</h4>
+                                <div id="progress2" class="progreso mt-3">
+                                    <h4><?=(substr($grupo->actividades->act2->test,0,1) / substr($grupo->actividades->act2->test,2,1)) *100?>%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <?php
+                                if(strlen($grupo->actividades->act2->fotos)>0){
+                            ?>
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Fotos</h4>
+                                <div id="progress2" class="progreso mt-3">
+                                    <h4><?=substr((substr($grupo->actividades->act2->fotos,0,1) / substr($grupo->actividades->act2->fotos,2,1)) *100,0,5)?>%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <?php
+                                }
+                            ?>
+                        </div>
+                    </div>
+                        
+                    <script>
+                        var bar = new ProgressBar.Circle(".modalMapa #progress2", {
+                                color: '#A9FF2C',
+                                trailColor: '#eee',
+                                trailWidth: 1,
+                                duration: 2400,
+                                easing: 'easeInOut',
+                                strokeWidth: 4,
+                                from: {color: '#A9FF2C', a:0},
+                                to: {color: '#2FD84E', a:1},
+                                // Set default step function for all animate calls
+                                step: function(state, circle) {
+                                    circle.path.setAttribute('stroke', state.color);
+                                }
+                                });
+                            var valor = <?=substr($grupo->actividades->act2->test,0,1) / substr($grupo->actividades->act2->test,2,1)?>;
+                            bar.set(valor);
+                            progressVals.push(valor);  
+                            progressArr.push(bar);
+                    </script>
+                    <?php
+                        if(strlen($grupo->actividades->act2->fotos)>0){
+                    ?>
+                    <script>
+                        var bar = new ProgressBar.Circle(".modalMapa .col-md-6:nth-of-type(2) #progress2", {
+                                color: '#A9FF2C',
+                                trailColor: '#eee',
+                                trailWidth: 1,
+                                duration: 2400,
+                                easing: 'easeInOut',
+                                strokeWidth: 4,
+                                from: {color: '#A9FF2C', a:0},
+                                to: {color: '#2FD84E', a:1},
+                                // Set default step function for all animate calls
+                                step: function(state, circle) {
+                                    circle.path.setAttribute('stroke', state.color);
+                                }
+                                });
+                            var valor = <?=substr($grupo->actividades->act2->fotos,0,1) / substr($grupo->actividades->act2->fotos,2,1)?>;
+                            bar.set(valor);
+                            progressVals.push(valor);     
+                            progressArr.push(bar);
+
+                    </script>
+                    <?php
+                        }
+                    ?>
                 </div>
             </div>
             
@@ -138,9 +259,71 @@
                 if(strlen($grupo->idAct3)>0){
             ?>
             <div id="3" class="modalMapa">
-                <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">Unibertsitatea</h3>
-                <div class="infoAct pt-5">
+                <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>  
+                <div class="infoAct"> 
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                    <h2 class="text-center ">Unibertsitatea <div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act3->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act3->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-3">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Preguntas</h4>
+                                <div id="progress3" class="progreso mt-3">
+                                    <h4><?=(substr($grupo->actividades->act3->test,0,1) / substr($grupo->actividades->act3->test,2,1)) *100?>%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <div class="col col-md-3"></div>
+                        </div>
+                        <script>
+                            var bar = new ProgressBar.Circle(".modalMapa #progress3", {
+                                    color: '#A9FF2C',
+                                    trailColor: '#eee',
+                                    trailWidth: 1,
+                                    duration: 2400,
+                                    easing: 'easeInOut',
+                                    strokeWidth: 4,
+                                    from: {color: '#A9FF2C', a:0},
+                                    to: {color: '#2FD84E', a:1},
+                                    // Set default step function for all animate calls
+                                    step: function(state, circle) {
+                                        circle.path.setAttribute('stroke', state.color);
+                                    }
+                                    });
+                            var valor = <?=substr($grupo->actividades->act3->test,0,1) / substr($grupo->actividades->act3->test,2,1)?>;
+                            bar.set(valor);
+                            progressVals.push(valor);     
+                            progressArr.push(bar);
+                                
+                        </script>
+                        <?php
+                            if(strlen($grupo->actividades->act3->foto1) > 0){
+                        ?>
+                        <div class="col-12 row mt-5">
+                            <h4 class="col-12">Fotos <div class="linea"></div></h4>
+
+                            <div class="col-12 col-md-4 text-center p-2">
+                                <img width="60%" src="data:image/png;base64,<?=$grupo->actividades->act3->foto1?>"/>
+                            </div>
+                            <div class="col-12 col-md-4 text-center p-2">
+                                <img width="60%" src="data:image/png;base64,<?=$grupo->actividades->act3->foto2?>"/>
+                            </div>
+                            <div class="col-12 col-md-4 text-center p-2">
+                                <img width="60%" src="data:image/png;base64,<?=$grupo->actividades->act3->foto3?>"/>
+                            </div>
+                                    
+                        </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
                 
                 </div>
             </div>
@@ -152,8 +335,49 @@
             ?>
             <div id="4" class="modalMapa">
                 <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">Trena</h3>
-                <div class="infoAct pt-5">
+                <div class="infoAct">
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                <h2 class="text-center ">Trena <div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act4->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act4->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-3">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Palabras</h4>
+                                <div id="progress6" class="progreso mt-3">
+                                    <h4>100%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <div class="col col-md-3"></div>
+                            <script>
+                                var bar = new ProgressBar.Circle(".modalMapa #progress6", {
+                                        color: '#A9FF2C',
+                                        trailColor: '#eee',
+                                        trailWidth: 1,
+                                        duration: 2400,
+                                        easing: 'easeInOut',
+                                        strokeWidth: 4,
+                                        from: {color: '#A9FF2C', a:0},
+                                        to: {color: '#2FD84E', a:1},
+                                        // Set default step function for all animate calls
+                                        step: function(state, circle) {
+                                            circle.path.setAttribute('stroke', state.color);
+                                        }
+                                        });
+                                bar.set(1);
+                                progressVals.push(1);     
+                                progressArr.push(bar);
+                                    
+                            </script>
+                        </div>
+                    </div>
                 
                 </div>
             </div>
@@ -166,8 +390,66 @@
 
             <div id="5" class="modalMapa">
                 <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">San miguel errota</h3>
-                <div class="infoAct pt-5">
+                <div class="infoAct">
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                    <h2 class="text-center ">San miguel errota<div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act5->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act5->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-3">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Frases</h4>
+                                <div id="progress4" class="progreso mt-3">
+                                    <h4>100%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <div class="col col-md-3"></div>
+                            <script>
+                                var bar = new ProgressBar.Circle(".modalMapa #progress4", {
+                                        color: '#A9FF2C',
+                                        trailColor: '#eee',
+                                        trailWidth: 1,
+                                        duration: 2400,
+                                        easing: 'easeInOut',
+                                        strokeWidth: 4,
+                                        from: {color: '#A9FF2C', a:0},
+                                        to: {color: '#2FD84E', a:1},
+                                        // Set default step function for all animate calls
+                                        step: function(state, circle) {
+                                            circle.path.setAttribute('stroke', state.color);
+                                        }
+                                        });
+                                bar.set(1);
+                                progressVals.push(1);     
+                                progressArr.push(bar);
+                                    
+                            </script>
+                        </div>
+                        <?php
+                            if(strlen($grupo->actividades->act5->foto1) > 0){
+                        ?>
+                        <div class="col-12 row mt-5">
+                            <h4 class="col-12">Fotos <div class="linea"></div></h4>
+
+                            <div class="col-12 col-md-6 text-center p-2">
+                                <img width="60%" src="data:image/png;base64,<?=$grupo->actividades->act5->foto1?>"/>
+                            </div>
+                            <div class="col-12 col-md-6 text-center p-2">
+                                <img width="60%" src="data:image/png;base64,<?=$grupo->actividades->act5->foto2?>"/>
+                            </div>
+                                    
+                        </div>
+                        <?php
+                            }
+                        ?>
+                    </div>
                 
                 </div>
             </div>
@@ -178,8 +460,49 @@
             ?>
             <div id="6" class="modalMapa">
                 <div class="closeModalMap"><img class="invert" src="../../img/closeFeed.svg"/></div>
-                <h3 class="text-center py-3">Gernika</h3>
-                <div class="infoAct pt-5">
+                <div class="infoAct">
+                    <div class="row">
+                        <div class="col-10 col-md-4 card" style="height:fit-content">
+                            <div class="d-flex justify-content-center align-items-center pt-3">
+                                <div class="time text-center">
+                                    <h2 class="text-center ">Gernika<div class="linea"></div></h2>
+                                    <p><?=explode(" ",$grupo->actividades->act6->fecha)[0]?></p>
+                                    <p><?=explode(" ",$grupo->actividades->act6->fecha)[1]?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 row mt-3">
+                            <div class="col col-md-3"></div>
+                            <div class="col-12 col-md-6 d-flex flex-column justify-content-center align-items-center mt-5 mt-md-0">
+                                <h4>Preguntas</h4>
+                                <div id="progress5" class="progreso mt-3">
+                                <h4><?=substr((substr($grupo->actividades->act6->test,0,1) / substr($grupo->actividades->act6->test,2,1)) *100,0,5)?>%<p class="text-muted">acertado</p></h4>
+                                </div>
+
+                            </div>
+                            <div class="col col-md-3"></div>
+                        </div>
+                        <script>
+                            var bar = new ProgressBar.Circle(".modalMapa #progress5", {
+                                    color: '#A9FF2C',
+                                    trailColor: '#eee',
+                                    trailWidth: 1,
+                                    duration: 2400,
+                                    easing: 'easeInOut',
+                                    strokeWidth: 4,
+                                    from: {color: '#A9FF2C', a:0},
+                                    to: {color: '#2FD84E', a:1},
+                                    // Set default step function for all animate calls
+                                    step: function(state, circle) {
+                                        circle.path.setAttribute('stroke', state.color);
+                                    }
+                                    });
+                                var valor = <?=substr($grupo->actividades->act6->test,0,1) / substr($grupo->actividades->act6->test,2,1)?>;
+                                bar.set(valor);
+                                progressVals.push(valor);  
+                                progressArr.push(bar);
+                        </script>
+                    </div>
                 
                 </div>
             </div>
@@ -220,7 +543,7 @@
                     </div>
                 </div>
             </div>
-            <div id="5" class="marker 5 <?=(strlen($grupo->idAct6)>0) ? "":"markerInactivo"?>">
+            <div id="5" class="marker 5 <?=(strlen($grupo->idAct5)>0) ? "":"markerInactivo"?>">
                 <div>
                     <div class="backMarker"></div>
                     <div class="infoMarker">

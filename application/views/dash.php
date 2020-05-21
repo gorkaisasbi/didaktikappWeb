@@ -16,7 +16,7 @@
     <script src="js/dash.js"></script>
     <script src="js/Chart.bundle.min.js"></script>
     <script src="js/aos.js"></script>
-    <script src="js/speech.js"></script>
+    <script src="js/progressbar.min.js"></script>
     <link rel="stylesheet" href="css/Chart.min.css"/>
     <link rel="stylesheet" href="css/animate.css"/>
     <link rel="stylesheet" href="css/aos.css"/>
@@ -31,6 +31,9 @@
         $listas = <?=json_encode($this->session->listas)?>;
 </script>
 <?$this->load->view("fade");?>
+<script>
+    clearTimeout($tFade);
+</script>
 <?$this->load->view("barra");?>
 <?$this->load->view("divPerfil");?>
 <?$this->load->view("search");?>
@@ -87,7 +90,6 @@
     <?$this->load->view("listas");?>
     <?$this->load->view("boton");?>
     <script>
-        clearTimeout($tFade);
         var d = new Date();
         $estiloAuto = <?=$this->session->usuario->estiloAuto?>;
         var mapStyle = "dark";

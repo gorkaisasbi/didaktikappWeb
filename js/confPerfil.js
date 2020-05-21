@@ -189,7 +189,9 @@ $("#btnGuardarPass").click((e)=>{
                     type:"POST",
                     data:$("#formPass").serialize(),
                     success:(xhr)=>{
-                        $("#inPass").val(xhr);
+                        $("#inPass").val($("#pass1").val());
+                        $("#pass1").val("");
+                        $("#pass2").val("");
                         $("#btnEditPass").removeClass("fa-window-close");
                         $("#tableCont > tbody").css("transform","translateY(-110%)");
                         abrirFeedback("Contraseña actulizada correctamente");

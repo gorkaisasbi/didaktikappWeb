@@ -327,22 +327,85 @@ input:focus{
 #divDescarga{   
     transform: translateY(-300px);
     padding-top: 200px;
-    padding-bottom: 300px;
 }
 
-.borderFooter{
-    height: 50px;
-    clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
-    transform: translateY(1px);
+#botInicio{
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    z-index: -1;
+}
+
+
+#divUltimosGrupos{
     position: relative;
-    bottom: 0;
+    margin: 150px auto;
     z-index: 2;
 }
-#footerInicio{
-    position: relative;
-    z-index: 2;
-    height:100px;
-    bottom: 0;
+
+
+.btn-outline-info{
+    color: #0072ff!important;
+    border-color: #0072ff!important;
+}
+.btn-outline-info:hover {
+    background-color: #0072ff!important;
+    color: white!important;
+}
+
+/********************CARD BUSQUEDA GRUPOS****************************/
+
+.deckGrupos .card{
+    cursor: pointer;
+    background-color: rgb(50,50,50);
+    color: white;
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,.5);
+}
+
+.deckGrupos .card i{
+    font-size: 5em; 
+    text-align: center;
+    padding: 20px;
+}
+
+
+.delay-1{
+    animation-delay: .3s;
+}
+.delay-2{
+    animation-delay: .4s;
+}
+.delay-3{
+    animation-delay: .5s;
+}
+.delay-4{
+    animation-delay: .6s;
+}
+.delay-5{
+    animation-delay: .7s;
+}
+.delay-6{
+    animation-delay: .8s;
+}
+.delay-7{
+    animation-delay: .9s;
+}
+.delay-8{
+    animation-delay: 1.0s;
+}
+.delay-9{
+    animation-delay: 1.1s;
+}
+.delay-10{
+    animation-delay: 1.2s;
+}
+.delay-11{
+    animation-delay: 1.3s;
+}
+.delay-12{
+    animation-delay: 1.4s;
 }
 
 
@@ -525,4 +588,6 @@ input:focus{
         font-size: 1.8em;
     }
 }
+
+
 

@@ -43,6 +43,7 @@ $("#addCardListas").click(()=>{
             $('#dash').append(xhr);
             $("#divAddCardListas").parent().css("display","none");
             cargarCards();
+            updateCharts();
             cerrarAdd();
             abrirFeedback("Ventana añadida correctamente");
         },
@@ -113,7 +114,7 @@ function filtrarGruposAdd(){
                     $txtlistas += $listasGrupo[j].nombreLista+" / ";
                 }
                 $txtlistas = $txtlistas.substr(0,$txtlistas.length-3);
-                $("#addBuscarGrupo #listaGruposAdd").append('<div id="addGrupo'+$gruposBusquedaAdd[i].idgrupo+'" class="divGrupo divGrupoAdd"><i class="fas fa-users"></i><p>'+$gruposBusquedaAdd[i].nombreGrupo+'<span class="small text-muted">['+$txtlistas+']</span>  </p></div>');
+                $("#addBuscarGrupo #listaGruposAdd").append('<div class="col-12 col-sm-12 col-md-6 col-lg-3"><div id="addGrupo'+$gruposBusquedaAdd[i].idgrupo+'" class="card m-3 divGrupoAdd animated flipInY delay-'+(i+1)+'" ><i class="fas fa-users card-img-top"></i><div class="card-body"><h5 class="card-title">'+$gruposBusquedaAdd[i].nombreGrupo+'</h5><p class="card-text"><small class="text-muted">['+$txtlistas+']</small><br><small class="text-muted">'+$gruposBusquedaAdd[i].fechaInicio+'</small></p><div id="'+$gruposBusquedaAdd[i].idgrupo+'" class="btn btn-outline-success btn-block border-0">Añadir</div></div></div></div> ');
             }
             $(".divGrupoAdd").click(addGrupo);
     
@@ -129,7 +130,6 @@ function filtrarGruposAdd(){
 
 function addGrupo(e){
     var $idGrupo = e.currentTarget.id.substr("addGrupo".length);
-    console.log($idGrupo);
 
     $.ajax({
         url:"/main/addCardGrupo/"+$idGrupo,

@@ -8,4 +8,8 @@ class Inicio extends CI_Controller {
 		$this->load->view('inicio');
 	}
 
+	public function search(){
+		$this->load->view('searchNoLogin');
+	}
+
 }

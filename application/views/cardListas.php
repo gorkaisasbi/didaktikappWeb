@@ -10,17 +10,11 @@
         <div class="sec">
             <canvas id="canvasCantListas2"></canvas>
         </div>
-        <div class="sec">
-        </div>
-        <div class="sec">
-        </div>
     </div>
     <div class="rightNav">
         <div class="latPos"></div>
         <p id="sec0"><i class="fas fa-caret-right"></i></p>
         <p id="sec1"><i class="fas fa-caret-right"></i></p>
-        <p id="sec2"><i class="fas fa-caret-right"></i></p>
-        <p id="sec3"><i class="fas fa-caret-right"></i></p>
     </div>
 </div>
 <script>
@@ -35,9 +29,9 @@
         $data = {
                 labels: $nomsListas,
                 datasets: [{
-                    label: 'Grupos',
-                    borderColor: 'rgb(0,114,255)',
-                    borderWidth:5,
+                    label: 'Número de grupos',
+                    backgroundColor: 'rgb(0,114,255,.7)',
+                    borderWidth:0,
                     data: $contListas
                 }]
         };
@@ -49,7 +43,7 @@
             options: {
                 title: {
                     display: true,
-                    text: 'Numero de grupos'
+                    text: 'Listas'
                 },
                 scales: {
                     yAxes: [{
@@ -73,21 +67,101 @@
         $charts.push(chartCantListas);
         }, 1000);
 
+
+        /***********************CHART DE ACT2**************************/
         $nomsListas = [];
-        $contListas = [];
+        $sumAciertosTest = [];
+        $mediaAciertosTest = [];
+        $sumAciertosFotos = [];
+        $mediaAciertosFotos = [];
         for(i=0;i<$listas.length;i++){
             $nomsListas.push($listas[i].nombreLista);
-            $contListas.push($listas[i].grupos.length);
+
+            $.ajax({
+                url:"/main/sumListaTest/"+$listas[i].idlista,
+                type:"GET",
+                async: false,
+                success:(xhr)=>{
+                    $sumAciertosTest.push(xhr);
+                },
+                error:(xhr)=>{
+                    console.log(xhr);
+                }
+            });
+
+            $.ajax({
+                url:"/main/sumListaFotos/"+$listas[i].idlista,
+                type:"GET",
+                async: false,
+                success:(xhr)=>{
+                    $sumAciertosFotos.push(xhr);
+                },
+                error:(xhr)=>{
+                    console.log(xhr);
+                }
+            });
+
+            $.ajax({
+                url:"/main/mediaListaTest/"+$listas[i].idlista,
+                type:"GET",
+                async: false,
+                success:(xhr)=>{
+                    $mediaAciertosTest.push(xhr);
+                },
+                error:(xhr)=>{
+                    console.log(xhr);
+                }
+            });
+
+
+            $.ajax({
+                url:"/main/mediaListaFotos/"+$listas[i].idlista,
+                type:"GET",
+                async: false,
+                success:(xhr)=>{
+                    $mediaAciertosFotos.push(xhr);
+                },
+                error:(xhr)=>{
+                    console.log(xhr);
+                }
+            });
+
         }
+        
+
         $data2 = {
                 labels: $nomsListas,
-                datasets: [{
-                    label: 'Grupos',
-                    borderColor: 'rgb(255,255,255)',
-                    borderWidth:5,
-                    data: $contListas
-                }]
-        };
+                datasets: [
+                    {
+                    label: 'Media aciertos test',
+                    borderColor: 'rgba(0,205,0,.8)',
+                    backgroundColor:'rgba(0,0,0,0)',
+                    borderWidth:3,
+                    data: $mediaAciertosTest,
+                    type: "line"
+                },
+                {
+                    label: 'Media aciertos fotos',
+                    borderColor: 'rgba(0,114,255,.8)',
+                    backgroundColor:'rgba(0,0,0,0)',
+                    borderWidth:3,
+                    data: $mediaAciertosFotos,
+                    type: "line"
+                },
+                {
+                    label: 'Aciertos test',
+                    backgroundColor: 'rgba(0,255,0,.7)',
+                    borderWidth:0,
+                    data: $sumAciertosTest
+                },
+                {
+                    label: 'Aciertos Fotos',
+                    backgroundColor: 'rgba(0,114,255,.7)',
+                    borderWidth:0,
+                    data: $sumAciertosFotos
+                }
+            
+            ]};
         var ctx2 = document.getElementById('canvasCantListas2').getContext('2d');
         setTimeout(() => {
             chartCantListas2 = new Chart(ctx2, {
@@ -96,7 +170,7 @@
             options: {
                 title: {
                     display: true,
-                    text: 'Numero de grupos'
+                    text: 'Aciertos Actividad San Miguel'
                 },
                 scales: {
                     yAxes: [{
@@ -125,4 +199,3 @@
 
 </script>
 <link rel="stylesheet" property="stylesheet" href="css/cardListas.css">
-<script src="js/cardListas.js"></script>

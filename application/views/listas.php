@@ -33,23 +33,27 @@
                             <h5 class="card-title"><?=$this->session->listas[$i]->nombreLista?></h5>
                             <input type="text" name="nombreGrupo" class="buscarGrupo" id="inBuscaGrupo,<?=$this->session->listas[$i]->idlista?>" placeholder="Nombre de grupo"/>
                         </div>
-                        <div id="listaGrupos" class="mt-5">
+                        <div id="listaGrupos" class="mt-5 row deckGrupos">
                             <?php
                                 if(count($this->session->listas[$i]->grupos)==0){
                             ?>
-                                <p class="mt-3 infoNoHayGrupos">No hay grupos en esta lista</p>
+                                <p class="mt-3 col-12 text-center infoNoHayGrupos">No hay grupos</p>
                             <?php
                                 }else{
                                     for($j = 0;$j<count($this->session->listas[$i]->grupos);$j++){
                             ?>
-                            <div id="grupo<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="divGrupo">
-                                <i class="fas fa-users"></i>
-                                <p><?=$this->session->listas[$i]->grupos[$j]->nombreGrupo?></p>
-                                <div class="btnsLista">
-                                    <a href="main/verGrupo/<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="btn btn-outline-success border-0">Ver</a>
-                                    <a href="main/eliminarDeLista/<?=$this->session->listas[$i]->idlista?>/<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="btn btn-outline-danger border-0 eliminarDeLista">Eliminar</a>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-3">
+                                <div id="grupo<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="card m-3 divGrupo animated flipInY delay-<?=($j+1)?>" >
+                                    <i class="fas fa-users card-img-top"></i>
+                                    <div class="card-body">
+                                        <h5 class="card-title"><?=$this->session->listas[$i]->grupos[$j]->nombreGrupo?></h5>
+                                        <p class="card-text"><small class="text-muted"><?=$this->session->listas[$i]->grupos[$j]->fechaInicio?></small></p>
+                                        <a href="main/verGrupo/<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="btn btn-block btn-outline-success border-0">Ver</a>
+                                        <a href="main/eliminarDeLista/<?=$this->session->listas[$i]->idlista?>/<?=$this->session->listas[$i]->grupos[$j]->idgrupo?>" class="btn btn-block btn-outline-danger border-0 eliminarDeLista">Eliminar</a>
+                                    </div>
                                 </div>
                             </div>
+                            <!--//<a href="#" id="anadirALista'+$gruposBusqueda[i].idgrupo+'" class="btn btn-block btn-outline-warning anadirALista">Añadir</a></div></div></div>-->
                             <?php
                                 }}
                             ?>

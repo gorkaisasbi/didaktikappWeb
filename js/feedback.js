@@ -1,4 +1,6 @@
-function abrirFeedback(msg,tipo){
+function abrirFeedback(msg,tipo,long){
+    long = typeof long != 'undefined' ? true : false;
+
     if(tipo ==="error"){
         $("#feedback").css("backgroundColor","rgba(200,0,0,.7)");
     }
@@ -7,7 +9,8 @@ function abrirFeedback(msg,tipo){
     $("#feedback > p").html(msg);
     setTimeout(()=>{
         cerrarFeedback();
-    },2500);
+    },(long)? 7000:2500);
+
 }
 
 function cerrarFeedback(){

@@ -2,8 +2,11 @@
     position: relative;
     width: 100%;
     height: 100%;
+    overflow-y: overlay;
 }
-
+.dashCard .sec::-webkit-scrollbar{
+    display: none;
+}
 
 .rightNav{
     position: absolute;
@@ -31,4 +34,12 @@
     border-radius: 5px;
     top: 0;
     transition: .3s;
+}
+
+.sinAct{
+    font-size: 2em;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
 }

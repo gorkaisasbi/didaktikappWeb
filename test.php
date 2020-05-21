@@ -1,18 +1,19 @@
 <?php
-
+    sleep(1);
+    echo "Script ejecutado\n";
     $files = scandir("/opt/lampp/proftpd/didaktikapp");
     for($i=0;$i<count($files);$i++){
         $nombre = $files[$i];
         if(count(explode(".",$nombre))>0){
-            $extension =  explode(".",$nombre)[1];
+            $extension =  isset(explode(".",$nombre)[1]) ? explode(".",$nombre)[1]: null;
             if($extension == "json"){
                 $json = file_get_contents("/opt/lampp/proftpd/didaktikapp/".$nombre);
                 $json = json_decode($json);
                 $jsonObj = $json[0];
-                if(property_exists($jsonObj,"grupo")){
+                if(isset($jsonObj->grupo)){
                     $grupo = $jsonObj->grupo;
                     guardarGrupo($grupo);
-                    if(property_exists($jsonObj,"actividad")){
+                    if(isset($jsonObj->actividad)){
                         $actividad = $jsonObj->actividad;
                         switch($actividad->tipo){
                             case 8:
@@ -38,10 +39,12 @@
                         }
                     
                     }
-
+                    rename("/opt/lampp/proftpd/didaktikapp/".$nombre,"/opt/lampp/proftpd/didaktikapp/backup/".explode(".",$nombre)[0].date('Y-m-d-H:i:s').'.'.$extension);
+                }else{
+                    rename("/opt/lampp/proftpd/didaktikapp/".$nombre,"/opt/lampp/proftpd/didaktikapp/backup/MIERDA".explode(".",$nombre)[0].date('Y-m-d-H:i:s').'.'.$extension);
+                    
                 }
-                unlink("/opt/lampp/proftpd/didaktikapp/".$nombre);
-
+               
             }
         }
     }
@@ -157,8 +160,8 @@
         if(!property_exists($actividad,"fragment")){
             $actividad->fragment = null;
         }
-        if(!property_exists($actividad,"foto1")){
-            $actividad->foto1 = null;
+        if(!property_exists($actividad,"fotos")){
+            $actividad->fotos = null;
         }
         if(!property_exists($actividad,"test")){
             $actividad->test = null;
@@ -178,8 +181,8 @@
          $sql = "SELECT idGrupo,idAct2 FROM grupos WHERE deviceId = '$deviceId'";
          $result = $conn->query($sql);
          $idgrupo = (object) $result->fetch_assoc();
-         if($idgrupo->idAct2 == null){
-            $sqlIn = "INSERT INTO actividadSanMiguel (estado, fragment, foto1, test) VALUES ($actividad->estado, $actividad->fragment,'$actividad->foto1','$actividad->test')";
+         if($idgrupo->idAct2 == null && $actividad->estado == 2){
+            $sqlIn = "INSERT INTO actividadSanMiguel (estado, fragment, fotos, test) VALUES ($actividad->estado, $actividad->fragment,'$actividad->fotos','$actividad->test')";
             $conn->query($sqlIn);
 
             $sqlUpdateGrupo = "UPDATE grupos SET idAct2 = $conn->insert_id WHERE idGrupo = $idgrupo->idGrupo";
@@ -195,8 +198,8 @@
             if($actividad->fragment !=null){
                 $sqlUpdate.= " fragment = ". $actividad->fragment.",";
             }
-            if($actividad->foto1 !=null){
-                $sqlUpdate.= " foto1 = '". $actividad->foto1 ."',";
+            if($actividad->fotos !=null){
+                $sqlUpdate.= " fotos = '". $actividad->fotos ."',";
             }
             if($actividad->test !=null){
                 $sqlUpdate.= " test = '". $actividad->test."',";
@@ -214,7 +217,6 @@
     }
 
     function guardarAct3($actividad,$grupo){
-
         
         if(!property_exists($actividad,"estado")){
             $actividad->estado = null;
@@ -235,7 +237,34 @@
         if(!property_exists($actividad,"test")){
             $actividad->test = null;
         }
+        
+        $filess = scandir("/opt/lampp/proftpd/didaktikapp");
+        $contImgs = 1;
+        //Posible do while para coger las imagenes si o si cuando se suban
+        for($j=0;$j<count($filess);$j++){
+            $nombre = $filess[$j];
+            $extension =  isset(explode(".",$nombre)[2]) ? explode(".",$nombre)[2] : null;
+            if($extension == "jpg"){
+                $mail = explode("_",$nombre)[0];
+                $nomGrupo = explode("_",$nombre)[1];
+                if($mail == $grupo->deviceId && $nomGrupo == $grupo->nombre){     
+                    if($contImgs == 1){
+                        $actividad->foto1 = "/opt/lampp/proftpd/didaktikapp/".$nombre;
+                    }
+                    if($contImgs == 2){
+                        $actividad->foto2 = "/opt/lampp/proftpd/didaktikapp/".$nombre;
+                    }
+                    if($contImgs == 3){
+                        $actividad->foto3 = "/opt/lampp/proftpd/didaktikapp/".$nombre;
+                    }
 
+                    $contImgs++;
+                }
+
+                
+                
+            }
+        }
 
          // Create connection
          $conn = new mysqli("127.0.0.1", "didaktikapp", "Dw2*","bddidaktikapp");
@@ -250,8 +279,11 @@
          $sql = "SELECT idGrupo,idAct3 FROM grupos WHERE deviceId = '$deviceId'";
          $result = $conn->query($sql);
          $idgrupo = (object) $result->fetch_assoc();
+
+
+
          if($idgrupo->idAct3 == null){
-            $sqlIn = "INSERT INTO actividadUnibertsitatea (estado, fragment, foto1, foto2, foto3, test) VALUES ($actividad->estado, $actividad->fragment,'$actividad->foto1','$actividad->foto2','$actividad->foto3','$actividad->test')";
+            $sqlIn = "INSERT INTO actividadUnibertsitatea (estado, fragment, test) VALUES ($actividad->estado, $actividad->fragment,'$actividad->test')";
             $conn->query($sqlIn);
 
             $sqlUpdateGrupo = "UPDATE grupos SET idAct3 = $conn->insert_id WHERE idGrupo = $idgrupo->idGrupo";
@@ -268,13 +300,12 @@
                 $sqlUpdate.= " fragment = ". $actividad->fragment.",";
             }
             if($actividad->foto1 !=null){
-                $sqlUpdate.= " foto1 = '". $actividad->foto1 ."',";
+                $img1 = addslashes(file_get_contents($actividad->foto1));
+                $sqlUpdate.= " foto1 = '$img1',";
             }
             if($actividad->foto2 !=null){
-                $sqlUpdate.= " foto2 = '". $actividad->foto2 ."',";
-            }
-            if($actividad->foto3 !=null){
-                $sqlUpdate.= " foto3 = '". $actividad->foto3 ."',";
+                $img2 = addslashes(file_get_contents($actividad->foto2));
+                $sqlUpdate.= " foto2 = '$img2',";
             }
             if($actividad->test !=null){
                 $sqlUpdate.= " test = '". $actividad->test."',";
@@ -282,7 +313,20 @@
             $sqlUpdate = substr($sqlUpdate,0,strlen($sqlUpdate)-1);
             $sqlUpdate.=" WHERE id = ". $idgrupo->idAct3;
             $conn->query($sqlUpdate);
+
+
+            if($actividad->foto3 !=null){
+                $img3 = addslashes(file_get_contents($actividad->foto3));
+                $sqlUpdate2="UPDATE actividadUnibertsitatea SET foto3 = '$img3' WHERE id = ". $idgrupo->idAct3;
+                $conn->query($sqlUpdate2);
+            }
+
+
             echo "actividad 3 updateada\n";
+
+            if($actividad->foto1 != null)unlink($actividad->foto1);
+            if($actividad->foto2 != null)unlink($actividad->foto2);
+            if($actividad->foto3 != null)unlink($actividad->foto3);
 
 
          }
@@ -377,6 +421,31 @@
             $actividad->frases = null;
         }
 
+        $filess = scandir("/opt/lampp/proftpd/didaktikapp");
+        $contImgs = 1;
+        //Posible do while para coger las imagenes si o si cuando se suban
+        for($j=0;$j<count($filess);$j++){
+            $nombre = $filess[$j];
+            $extension =  isset(explode(".",$nombre)[2]) ? explode(".",$nombre)[2] : null;
+            if($extension == "jpg"){
+                $mail = explode("_",$nombre)[0];
+                $nomGrupo = explode("_",$nombre)[1];
+                if($mail == $grupo->deviceId && $nomGrupo == $grupo->nombre){     
+                    if($contImgs == 1){
+                        $actividad->foto1 = "/opt/lampp/proftpd/didaktikapp/".$nombre;
+                    }
+                    if($contImgs == 2){
+                        $actividad->foto2 = "/opt/lampp/proftpd/didaktikapp/".$nombre;
+                    }
+
+                    $contImgs++;
+                }
+
+                
+                
+            }
+        }
+
 
          // Create connection
          $conn = new mysqli("127.0.0.1", "didaktikapp", "Dw2*","bddidaktikapp");
@@ -392,7 +461,7 @@
          $result = $conn->query($sql);
          $idgrupo = (object) $result->fetch_assoc();
          if($idgrupo->idAct5 == null){
-            $sqlIn = "INSERT INTO actividadErrota (estado, fragment, foto1, foto2, frases) VALUES ($actividad->estado, $actividad->fragment,'$actividad->foto1','$actividad->foto2','$actividad->frases')";
+            $sqlIn = "INSERT INTO actividadErrota (estado, fragment, frases) VALUES ($actividad->estado, $actividad->fragment,'$actividad->frases')";
             $conn->query($sqlIn);
 
             $sqlUpdateGrupo = "UPDATE grupos SET idAct5 = $conn->insert_id WHERE idGrupo = $idgrupo->idGrupo";
@@ -409,10 +478,12 @@
                 $sqlUpdate.= " fragment = ". $actividad->fragment.",";
             }
             if($actividad->foto1 !=null){
-                $sqlUpdate.= " foto1 = '". $actividad->foto1 ."',";
+                $img1 = addslashes(file_get_contents($actividad->foto1));
+                $sqlUpdate.= " foto1 = '$img1',";
             }
             if($actividad->foto2 !=null){
-                $sqlUpdate.= " foto2 = '". $actividad->foto2 ."',";
+                $img2 = addslashes(file_get_contents($actividad->foto2));
+                $sqlUpdate.= " foto2 = '$img2',";
             }
             if($actividad->frases !=null){
                 $sqlUpdate.= " frases = '". $actividad->frases."',";
@@ -422,10 +493,12 @@
             $conn->query($sqlUpdate);
             echo "actividad 5 updateada\n";
 
+            if($actividad->foto1 != null)unlink($actividad->foto1);
+            if($actividad->foto2 != null)unlink($actividad->foto2);
+
 
          }
          mysqli_close($conn);
-
 
     }
 
@@ -460,7 +533,7 @@
          $sql = "SELECT idGrupo,idAct6 FROM grupos WHERE deviceId = '$deviceId'";
          $result = $conn->query($sql);
          $idgrupo = (object) $result->fetch_assoc();
-         if($idgrupo->idAct6 == null){
+         if($idgrupo->idAct6 == null && $actividad->estado == 2){
             $sqlIn = "INSERT INTO actividadGernika (estado, fragment, puzle, test) VALUES ($actividad->estado, $actividad->fragment,'$actividad->puzle','$actividad->test')";
             $conn->query($sqlIn);
 
@@ -490,6 +563,9 @@
 
 
          }
+         $sqlUpdateGrupoFin = "UPDATE grupos SET fechaFin = now() WHERE idGrupo = $idgrupo->idGrupo";
+         $conn->query($sqlUpdateGrupoFin);
+
          mysqli_close($conn);
 
 

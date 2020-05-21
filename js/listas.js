@@ -144,7 +144,7 @@ function abrirLista(e){
                 $(pTarget).css("height","90%");
                 $(target).css("height","100%"); 
                 $("#"+pTarget.id+" input").css("display","block");
-                $(target).find("#listaGrupos").css("display","block");
+                $(target).find("#listaGrupos").css("display","flex");
                 $("#"+pTarget.id+" input").focus();
                 setTimeout(()=>{
                     $("#"+pTarget.id+" input").css("width","50%");
@@ -161,7 +161,7 @@ function cerrarLista(){
         $abiertoLista = false;
         $btnEliminar = false;
         $(target).find("#listaGrupos").css("display","none");
-        $(".divGrupo").css("display","flex");
+        $(".divGrupo").parent().css("display","block");
         $("#"+pTarget.id+" input").css("width","0%");
         $("#"+pTarget.id+" input").css("borderColor","transparent");
         $(pTarget).css({
@@ -276,9 +276,9 @@ function eliminarDeLista(e){
         url:e.target.href,
         type:"GET",
         success:(xhr)=>{
-            $("#lista"+$idlista+" #grupo"+$idgrupo).remove();
+            $("#lista"+$idlista+" #grupo"+$idgrupo).parent().remove();
             if($("#lista"+$idlista+" #listaGrupos").children().length==0){
-                $("#lista"+$idlista+" #listaGrupos").append('<p class="mt-3 infoNoHayGrupos">No hay grupos en esta lista</p>');
+                $("#lista"+$idlista+" #listaGrupos").append('<p class="mt-3 col-12 text-center infoNoHayGrupos">No hay grupos</p>');
             }
 
             var gs = $listas.find(lista=>lista.idlista==$idlista).grupos;
@@ -295,13 +295,21 @@ function eliminarDeLista(e){
 
 function buscarGrupo(e){
     
-    $(".divGrupo").css("display","none");
+
+
     $id = e.target.id;
     $idlista = $id.split(",")[1];
+    $("#lista"+$idlista+" #listaGrupos").html("");
     $grupos = $listas.filter(lista => lista.idlista == $idlista)[0].grupos;
     $result = $grupos.filter(grupo => grupo.nombreGrupo.toLowerCase().indexOf($("#lista"+$idlista+" .buscarGrupo").val().toLowerCase())>=0);
     for(i=0;i<$result.length;i++){
-        $("#grupo"+$result[i].idgrupo+".divGrupo").css("display","flex");
+
+        $("#lista"+$idlista+" #listaGrupos").append('<div class="col-12 col-sm-12 col-md-6 col-lg-3"><div id="grupo'+$result[i].idgrupo+'" class="card m-3 divGrupo animated flipInY delay-'+(i+1)+'" ><i class="fas fa-users card-img-top"></i><div class="card-body"><h5 class="card-title">'+$result[i].nombreGrupo+'</h5><p class="card-text"><small class="text-muted">'+$result[i].fechaInicio+'</small></p><a href="main/verGrupo/'+$result[i].idgrupo+'" class="btn btn-block btn-outline-success border-0">Ver</a><a href="main/eliminarDeLista/'+$idlista+'/'+$result[i].idgrupo+'" class="btn btn-block btn-outline-danger border-0 eliminarDeLista">Eliminar</a></div></div></div>');
+
     }
+    if($result.length == 0){
+        $("#lista"+$idlista+" #listaGrupos").html('<p class="mt-3 col-12 text-center infoNoHayGrupos">No hay grupos </p>');
+    }
+    $(".eliminarDeLista").click(eliminarDeLista);
     
 }

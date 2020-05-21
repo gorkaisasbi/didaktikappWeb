@@ -14,12 +14,11 @@ function anadirALista(e){
             url:"/main/anadirALista/"+$idLista+"/"+$idGrupoAdd,
             type:"GET",
             success:(xhr)=>{
-                if($grupo != undefined){
+                if(typeof($grupo) !== "undefined"){
                     $listas.find(lista=>lista.idlista==$idLista).grupos.push($grupo);
-                    $("#lista"+$idLista+" #listaGrupos").append('<div id="grupo'+$idGrupoAdd+'" class="divGrupo"><i class="fas fa-users"></i><p>'+$grupo.nombreGrupo+'</p><div class="btnsLista"><a href="main/verGrupo/'+$idGrupoAdd+'" class="btn btn-outline-success border-0">Ver</a><a href="main/eliminarDeLista/'+$idLista+'/'+$idGrupoAdd+'" class="btn btn-outline-danger border-0 eliminarDeLista">Eliminar</a></div></div>');
                 }else{
                     $listas.find(lista=>lista.idlista==$idLista).grupos.push($gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd));
-                    $("#lista"+$idLista+" #listaGrupos").append('<div id="grupo'+$idGrupoAdd+'" class="divGrupo"><i class="fas fa-users"></i><p>'+$gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd).nombreGrupo+'</p><div class="btnsLista"><a href="main/verGrupo/'+$idGrupoAdd+'" class="btn btn-outline-success border-0">Ver</a><a href="main/eliminarDeLista/'+$idLista+'/'+$idGrupoAdd+'" class="btn btn-outline-danger border-0 eliminarDeLista">Eliminar</a></div></div>');
+                    $("#lista"+$idLista+" #listaGrupos").append('<div class="col-12 col-sm-12 col-md-6 col-lg-3"><div id="grupo'+$idGrupoAdd+'" class="card m-3 divGrupo animated flipInY delay-1" ><i class="fas fa-users card-img-top"></i><div class="card-body"><h5 class="card-title">'+$gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd).nombreGrupo+'</h5><p class="card-text"><small class="text-muted">'+$gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd).fechaInicio+'</small></p><a href="main/verGrupo/'+$idGrupoAdd+'" class="btn btn-block btn-outline-success border-0">Ver</a><a href="main/eliminarDeLista/'+$idLista+'/'+$idGrupoAdd+'" class="btn btn-block btn-outline-danger border-0 eliminarDeLista">Eliminar</a></div></div></div>');
                     $(".eliminarDeLista").click(eliminarDeLista);
                 }
 
@@ -33,7 +32,7 @@ function anadirALista(e){
             },
             complete:()=>{
                 cerrarOpcionesListas(); 
-                if($grupo == undefined)updateCharts();
+                if(typeof($grupo) === "undefined")updateCharts();
             }
         });
   

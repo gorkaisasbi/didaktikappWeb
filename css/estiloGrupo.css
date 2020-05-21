@@ -215,10 +215,48 @@
     left: 50%;
     transform: translateX(-50%);
     overflow-y: overlay;
+    padding: 2.3rem 1em;
     z-index: -1;
 }
-.infoAct > div{
-    height: 200%;
+
+.infoAct::-webkit-scrollbar {
+    display: none;
+}
+.modalMapa .infoAct h4{
+    font-size: 2em;
+}
+.modalMapa .infoAct .calendar{
+    width: 30%;
+    padding: 10px;
+}
+
+.modalMapa .infoAct .card{
+    background-color: rgb(240,240,240);
+}
+
+.time > p{
+    font-family: "reloj";
+    font-size: 1.5em;
+}
+
+.progreso{
+    width: 50%;
+    height: fit-content;
+    position: relative;
+
+}
+.progreso h4{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 2em;
+    text-align: center;
+}
+
+.progreso h4 p{
+    font-size: .5em;
+
 }
 
 #navMovil{

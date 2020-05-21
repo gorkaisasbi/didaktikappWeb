@@ -20,6 +20,7 @@ class Main extends CI_Controller {
 	}
 
 
+
 	public function updateDash(){
 		$dash = $this->input->post("dash");
 		$this->didaktikappDao->updateDash($dash,$this->session->usuario->idusuario);
@@ -33,12 +34,9 @@ class Main extends CI_Controller {
 			$grupo->actividades = (object)[];
 			if(strlen($grupo->idAct1)>0){
 				$grupo->actividades->act1 = $this->didaktikappDao->getAct1($grupo->idAct1);
-				$grupo->actividades->act1->foto1 = base64_encode($grupo->actividades->act1->foto1);
-				$grupo->actividades->act1->foto2 = base64_encode($grupo->actividades->act1->foto2);
 			}
 			if(strlen($grupo->idAct2)>0){
 				$grupo->actividades->act2 = $this->didaktikappDao->getAct2($grupo->idAct2);
-				$grupo->actividades->act2->foto1 = base64_encode($grupo->actividades->act2->foto1);
 			}
 			if(strlen($grupo->idAct3)>0){
 				$grupo->actividades->act3 = $this->didaktikappDao->getAct3($grupo->idAct3);
@@ -66,7 +64,7 @@ class Main extends CI_Controller {
 		$fechaHasta = $this->input->post("fechaHasta");
 		$checkListas = $this->input->post("checkListas");
 
-		$grupos = $this->didaktikappDao->buscarGrupos($nombreGrupo,$fechaHasta,$horaHasta,$fechaDesde,$horaDesde,$checkListas,$this->session->usuario->idusuario);
+		$grupos = $this->didaktikappDao->buscarGrupos($nombreGrupo,$fechaHasta,$horaHasta,$fechaDesde,$horaDesde,$checkListas,(isset($this->session->usuario)) ? $this->session->usuario->idusuario : "-1");
 		echo json_encode($grupos);
 	}
 
@@ -93,13 +91,72 @@ class Main extends CI_Controller {
 	public function editPass(){
 		$password = $this->input->post("pass1");
 		$this->didaktikappDao->editPassword($this->session->usuario->idusuario,$password);
-		$this->session->set_userdata("usuario",$this->didaktikappDao->getUser($this->session->usuario->username));
+		$usu = $this->didaktikappDao->getUser($this->session->usuario->username);
+		for($i=0;$i<count($usu->cardGrupos);$i++){
+			$grupo = $usu->cardGrupos[$i];
+			if($grupo->idgrupo == $idGrupo)$grupoAdd = $grupo;
+			$grupo->actividades = (object)[];
+			if(strlen($grupo->idAct1)>0){
+				$grupo->actividades->act1 = $this->didaktikappDao->getAct1($grupo->idAct1);
+			}
+			if(strlen($grupo->idAct2)>0){
+				$grupo->actividades->act2 = $this->didaktikappDao->getAct2($grupo->idAct2);
+			}
+			if(strlen($grupo->idAct3)>0){
+				$grupo->actividades->act3 = $this->didaktikappDao->getAct3($grupo->idAct3);
+				$grupo->actividades->act3->foto1 = base64_encode($grupo->actividades->act3->foto1);
+				$grupo->actividades->act3->foto2 = base64_encode($grupo->actividades->act3->foto2);
+				$grupo->actividades->act3->foto3 = base64_encode($grupo->actividades->act3->foto3);
+			}
+			if(strlen($grupo->idAct4)>0){
+				$grupo->actividades->act4 = $this->didaktikappDao->getAct4($grupo->idAct4);
+			}
+			if(strlen($grupo->idAct5)>0){
+				$grupo->actividades->act5 = $this->didaktikappDao->getAct5($grupo->idAct5);
+				$grupo->actividades->act5->foto1 = base64_encode($grupo->actividades->act5->foto1);
+				$grupo->actividades->act5->foto2 = base64_encode($grupo->actividades->act5->foto2);
+			}
+			if(strlen($grupo->idAct6)>0)$grupo->actividades->act6 = $this->didaktikappDao->getAct6($grupo->idAct6);
+
+
+		}
+		$this->session->set_userdata("usuario",$usu);
 		echo $password;
 	}
 
 	public function editEstilo($estilo){
 		$this->didaktikappDao->editEstilo($this->session->usuario->idusuario,$estilo);
-		$this->session->set_userdata("usuario",$this->didaktikappDao->getUser($this->session->usuario->username));
+
+		$usu = $this->didaktikappDao->getUser($this->session->usuario->username);
+		for($i=0;$i<count($usu->cardGrupos);$i++){
+			$grupo = $usu->cardGrupos[$i];
+			if($grupo->idgrupo == $idGrupo)$grupoAdd = $grupo;
+			$grupo->actividades = (object)[];
+			if(strlen($grupo->idAct1)>0){
+				$grupo->actividades->act1 = $this->didaktikappDao->getAct1($grupo->idAct1);
+			}
+			if(strlen($grupo->idAct2)>0){
+				$grupo->actividades->act2 = $this->didaktikappDao->getAct2($grupo->idAct2);
+			}
+			if(strlen($grupo->idAct3)>0){
+				$grupo->actividades->act3 = $this->didaktikappDao->getAct3($grupo->idAct3);
+				$grupo->actividades->act3->foto1 = base64_encode($grupo->actividades->act3->foto1);
+				$grupo->actividades->act3->foto2 = base64_encode($grupo->actividades->act3->foto2);
+				$grupo->actividades->act3->foto3 = base64_encode($grupo->actividades->act3->foto3);
+			}
+			if(strlen($grupo->idAct4)>0){
+				$grupo->actividades->act4 = $this->didaktikappDao->getAct4($grupo->idAct4);
+			}
+			if(strlen($grupo->idAct5)>0){
+				$grupo->actividades->act5 = $this->didaktikappDao->getAct5($grupo->idAct5);
+				$grupo->actividades->act5->foto1 = base64_encode($grupo->actividades->act5->foto1);
+				$grupo->actividades->act5->foto2 = base64_encode($grupo->actividades->act5->foto2);
+			}
+			if(strlen($grupo->idAct6)>0)$grupo->actividades->act6 = $this->didaktikappDao->getAct6($grupo->idAct6);
+
+
+		}
+		$this->session->set_userdata("usuario",$usu);
 		echo "exito";
 	}
 
@@ -156,8 +213,38 @@ class Main extends CI_Controller {
 	public function addCardGrupo($idGrupo=-1){
 		if($idGrupo>-1){
 			$this->didaktikappDao->addCardGrupo($idGrupo,$this->session->usuario->idusuario);
-			$this->session->set_userdata("usuario",$this->didaktikappDao->getUser($this->session->usuario->username));
-			$data['grupo'] = $this->didaktikappDao->getGrupo($idGrupo);
+			$usu = $this->didaktikappDao->getUser($this->session->usuario->username);
+			for($i=0;$i<count($usu->cardGrupos);$i++){
+				$grupo = $usu->cardGrupos[$i];
+				if($grupo->idgrupo == $idGrupo)$grupoAdd = $grupo;
+				$grupo->actividades = (object)[];
+				if(strlen($grupo->idAct1)>0){
+					$grupo->actividades->act1 = $this->didaktikappDao->getAct1($grupo->idAct1);
+				}
+				if(strlen($grupo->idAct2)>0){
+					$grupo->actividades->act2 = $this->didaktikappDao->getAct2($grupo->idAct2);
+				}
+				if(strlen($grupo->idAct3)>0){
+					$grupo->actividades->act3 = $this->didaktikappDao->getAct3($grupo->idAct3);
+					$grupo->actividades->act3->foto1 = base64_encode($grupo->actividades->act3->foto1);
+					$grupo->actividades->act3->foto2 = base64_encode($grupo->actividades->act3->foto2);
+					$grupo->actividades->act3->foto3 = base64_encode($grupo->actividades->act3->foto3);
+				}
+				if(strlen($grupo->idAct4)>0){
+					$grupo->actividades->act4 = $this->didaktikappDao->getAct4($grupo->idAct4);
+				}
+				if(strlen($grupo->idAct5)>0){
+					$grupo->actividades->act5 = $this->didaktikappDao->getAct5($grupo->idAct5);
+					$grupo->actividades->act5->foto1 = base64_encode($grupo->actividades->act5->foto1);
+					$grupo->actividades->act5->foto2 = base64_encode($grupo->actividades->act5->foto2);
+				}
+				if(strlen($grupo->idAct6)>0)$grupo->actividades->act6 = $this->didaktikappDao->getAct6($grupo->idAct6);
+
+
+			}
+			$this->session->set_userdata("usuario",$usu);
+
+			$data['grupo'] = $grupoAdd;
 			$htmlcardGrupo = $this->load->view('cardGrupo', $data, true);
 			echo $htmlcardGrupo;
 
@@ -169,13 +256,101 @@ class Main extends CI_Controller {
 
 		if($idGrupo>-1){
 			$this->didaktikappDao->deleteCardGrupo($idGrupo,$this->session->usuario->idusuario);
-			$this->session->set_userdata("usuario",$this->didaktikappDao->getUser($this->session->usuario->username));
+			$usu = $this->didaktikappDao->getUser($this->session->usuario->username);
+			for($i=0;$i<count($usu->cardGrupos);$i++){
+				$grupo = $usu->cardGrupos[$i];
+				$grupo->actividades = (object)[];
+				if(strlen($grupo->idAct1)>0){
+					$grupo->actividades->act1 = $this->didaktikappDao->getAct1($grupo->idAct1);
+				}
+				if(strlen($grupo->idAct2)>0){
+					$grupo->actividades->act2 = $this->didaktikappDao->getAct2($grupo->idAct2);
+				}
+				if(strlen($grupo->idAct3)>0){
+					$grupo->actividades->act3 = $this->didaktikappDao->getAct3($grupo->idAct3);
+					$grupo->actividades->act3->foto1 = base64_encode($grupo->actividades->act3->foto1);
+					$grupo->actividades->act3->foto2 = base64_encode($grupo->actividades->act3->foto2);
+					$grupo->actividades->act3->foto3 = base64_encode($grupo->actividades->act3->foto3);
+				}
+				if(strlen($grupo->idAct4)>0){
+					$grupo->actividades->act4 = $this->didaktikappDao->getAct4($grupo->idAct4);
+				}
+				if(strlen($grupo->idAct5)>0){
+					$grupo->actividades->act5 = $this->didaktikappDao->getAct5($grupo->idAct5);
+					$grupo->actividades->act5->foto1 = base64_encode($grupo->actividades->act5->foto1);
+					$grupo->actividades->act5->foto2 = base64_encode($grupo->actividades->act5->foto2);
+				}
+				if(strlen($grupo->idAct6)>0)$grupo->actividades->act6 = $this->didaktikappDao->getAct6($grupo->idAct6);
+
+
+			}
+			$this->session->set_userdata("usuario",$usu);
 			echo "exito";
 
 		}
 
 
 	}
+
+	public function checkUpdate($idgrupo = -1){
+		if($idgrupo > -1){
+			$grupo = $this->didaktikappDao->getGrupo($idgrupo);
+			$cont = 0;
+			if(strlen($grupo->idAct1)>0)$cont++;
+			if(strlen($grupo->idAct2)>0)$cont++;
+			if(strlen($grupo->idAct3)>0)$cont++;
+			if(strlen($grupo->idAct4)>0)$cont++;
+			if(strlen($grupo->idAct5)>0)$cont++;
+			if(strlen($grupo->idAct6)>0)$cont++;
+			echo $cont;
+		}else{
+			echo -1;
+		}
+
+	}
+
+
+	public function sumListaTest($idLista=-1){
+		if($idLista != -1){
+			echo $this->didaktikappDao->getSumListaTest($idLista);
+		
+		}
+	}
+
+	public function mediaListaTest($idLista=-1){
+		if($idLista != -1){
+			echo $this->didaktikappDao->getMediaListaTest($idLista);
+		}
+	}
+
+	public function sumListaFotos($idLista=-1){
+		if($idLista != -1){
+			echo $this->didaktikappDao->getSumListaFotos($idLista);
+		}
+	}
+
+	public function mediaListaFotos($idLista=-1){
+		if($idLista != -1){
+			echo $this->didaktikappDao->getMediaListaFotos($idLista);
+		}
+	}
+
+	public function mediaAct2Test(){
+		echo $this->didaktikappDao->getMediaAct2Test();
+	}
+
+	public function mediaAct2Fotos(){
+		echo $this->didaktikappDao->getMediaAct2Fotos();
+	}
+
+	public function mediaAct3(){
+		echo $this->didaktikappDao->getMediaAct3();
+	}
+
+	public function mediaAct6(){
+		echo $this->didaktikappDao->getMediaAct6();
+	}
+
 
 
 

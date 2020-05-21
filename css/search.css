@@ -74,33 +74,15 @@ legend{
     overflow-y: overlay;
     padding: 0 20px;
 }
+#listaGrupos::-webkit-scrollbar{
+    display: none;
+}
 .lightGrupo{
     background-color: rgba(180,180,180,.3)!important;
     border-color: rgba(180,180,180,1)!important;
 }
-.divGrupo{
-    width: 100%;
-    margin: 20px 0;
-    border-radius: 10px;
-    border: 2px solid black;
-    font-size: 2em;
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    color: white;
-    background-color: rgba(0,0,0,.3);
-    cursor: pointer;
-    position: relative;
-}
-.divGrupo p{
-    margin: 0;
-    margin-left: 15px;
-    font-size: .8em;
-}
-.divGrupo .btnsLista{
-    position: absolute;
-    right: 7%;
-}
-.divGrupo .btnsLista a{
-    margin: 0 10px;
-}
+
+
+
+
+

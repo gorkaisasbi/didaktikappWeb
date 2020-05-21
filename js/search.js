@@ -35,6 +35,7 @@ function abrirSearch(){
 function cerrarSearch(){
     $("#dash").css("top","0%");
     $("#divBuscar").css("top",-window.innerHeight-100);
+    $("#inBuscar").blur();
     $("body").css("overflowY","auto");
     $(".dashCard").css("opacity","0");
     $(".dashCard").css("transition",".3s");
@@ -56,7 +57,6 @@ function cerrarSearch(){
 
 $("#blockElecListas").click(cerrarOpcionesListas);
 
-$(".elecLista").click(anadirALista);
 
 
 
@@ -107,77 +107,6 @@ $("#horaDesde").change(filtrar);
 $("#checkBuscar").change(filtrar);
 
 
-function abrirOpcionesListas(e){
-    e.preventDefault();
-    $idGrupoAdd = e.target.id.substr("anadirALista".length);
-    
-    if($listas.length>0)$(".infoNoHayListaAnadir").remove();
-
-    $result = $listas.filter(lista=> lista.grupos.filter(g=>g.idgrupo == $idGrupoAdd).length > 0);
-    for(i=0;i<$result.length;i++){
-        $("#elecLista"+$result[i].idlista).css("display","none");
-    }
-    if($result.length==$listas.length){
-        $("#elecListas").append('<p class="infoNoHayListaAnadir text-center m-0">No tienes listas a las que añadir</p>');
-    }
-
-    $("#elecListas").css("display","block");
-    $("#blockElecListas").css("display","block");
-    setTimeout(()=>{
-        $("#elecListas").css({
-            "opacity":"1",
-            "transform":"translate(-50%,-50%) scale(1)"
-        });
-        $("#blockElecListas").css("opacity","1");
-    });
-
-}
-
-function cerrarOpcionesListas(){
-    $idGrupoAdd = -1;
-    $("#elecListas").css({
-        "opacity":"0",
-        "transform":"translate(-50%,-50%) scale(.1)"
-    });
-    $("#blockElecListas").css("opacity","0");
-
-    setTimeout(()=>{
-        $("#elecListas").css("display","none");
-        $("#blockElecListas").css("display","none");
-        $(".elecLista").css("display","block");
-    },300);
-
-}
-
-function anadirALista(e){
-
-    if($idGrupoAdd>-1){
-        $idLista = e.target.id.substr("elecLista".length);
-
-        $.ajax({
-            url:"/main/anadirALista/"+$idLista+"/"+$idGrupoAdd,
-            type:"GET",
-            success:(xhr)=>{
-                $listas.find(lista=>lista.idlista==$idLista).grupos.push($gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd))
-                $("#lista"+$idLista+" #listaGrupos").append('<div id="grupo'+$idGrupoAdd+'" class="divGrupo"><i class="fas fa-users"></i><p>'+$gruposBusqueda.find(g=>g.idgrupo == $idGrupoAdd).nombreGrupo+'</p><div class="btnsLista"><a href="main/verGrupo/'+$idGrupoAdd+'" class="btn btn-outline-success border-0">Ver</a><a href="main/eliminarDeLista/'+$idLista+'/'+$idGrupoAdd+'" class="btn btn-outline-danger border-0 eliminarDeLista">Eliminar</a></div></div>');
-                $("#lista"+$idLista+" #listaGrupos .infoNoHayGrupos").remove();
-                $(".eliminarDeLista").click(eliminarDeLista);
-                abrirFeedback("Grupo añadido a la lista");
-            },
-            error:(xhr)=>{
-                console.log(xhr);
-                abrirFeedback("Error al añadir grupo a la lista" ,"error");
-            },
-            complete:()=>{
-                cerrarOpcionesListas(); 
-                updateCharts();
-            }
-        });
-
-    }
-
-}
-
 function filtrar(){
 
     $("#divBuscar #listaGrupos").html("");
@@ -196,7 +125,9 @@ function filtrar(){
                 if(!$estiloAuto)classLight = "lightGrupo";
              
             for(i=0;i<$gruposBusqueda.length;i++){
-                $("#divBuscar #listaGrupos").append('<div class="divGrupo '+classLight+'"><i class="fas fa-users"></i><p>'+$gruposBusqueda[i].nombreGrupo+'</p><div class="btnsLista"><a href="main/verGrupo/'+$gruposBusqueda[i].idgrupo+'" class="btn btn-outline-success">Ver</a><a href="#" id="anadirALista'+$gruposBusqueda[i].idgrupo+'" class="btn btn-outline-warning anadirALista">Añadir</a></div></div>');
+                
+                $("#divBuscar #listaGrupos").append('<div class="col-6 col-sm-6 col-md-6 col-lg-3"><div id="cardGrupo'+$gruposBusqueda[i].idgrupo+'" class="card m-3  animated flipInY delay-'+(i+1)+'" ><i class="fas fa-users card-img-top"></i><div class="card-body"><h5 class="card-title">'+$gruposBusqueda[i].nombreGrupo+'</h5><p class="card-text"><small class="text-muted">'+$gruposBusqueda[i].fechaInicio+'</small></p><a href="main/verGrupo/'+$gruposBusqueda[i].idgrupo+'" class="btn btn-block btn-outline-success border-0">Ver</a><a href="#" id="anadirALista'+$gruposBusqueda[i].idgrupo+'" class="btn btn-block btn-outline-warning anadirALista border-0">Añadir</a></div></div></div>');
+                
             }
             $(".anadirALista").click(abrirOpcionesListas);
         },

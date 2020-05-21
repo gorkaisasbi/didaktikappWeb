@@ -22,13 +22,13 @@
         </div>
     </div>
     <div id="addBuscarGrupo" class="row">
-        <div class="col-12 mt-3">
+        <div class="col-12 mt-3 h-100">
             <form id="formBuscar">
             <div id="divInput" class="text-center">
                 <input type="text" id="inBuscarAdd" name="txtBuscar"/>  
             </div>
             </form>
-            <div id="listaGruposAdd" class="mt-2">
+            <div id="listaGruposAdd" class="mt-2 row deckGrupos">
             </div>  
         </div>
     </div>

@@ -66,7 +66,7 @@
     height: 85%;
     overflow-y: overlay;
 }
-#listListas i{
+.lista > i{
     font-size: 2.5em;
 }
 .lista{
@@ -89,18 +89,7 @@
     display: none;
     overflow-y: scroll;
 }
-.lista #listaGrupos .divGrupo{
-    background-color: transparent;
-    border-color: transparent;
-    color: #0072ff;
-    border-radius: 0;
-    border-bottom: 1px solid grey;
-    font-size: 1.5em;
-}
-.lista #listaGrupos .divGrupo p{
-    color: black;
 
-}
 .lista input{
     display: none;
     width: 0%;
@@ -111,6 +100,12 @@
     border-left: 2px solid transparent;
     border-right: 2px solid transparent;
     transition: .3s;
+}
+
+
+#listaGrupos .divGrupo{
+    font-size: 1.3em;
+    text-align: left;
 }
 
 #divCrearLista{
