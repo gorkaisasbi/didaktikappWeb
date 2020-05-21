@@ -117,7 +117,7 @@
                                 <img src="img/user.svg"/>
                                 <div class="pathBorder"></div>
                             </div>
-                            <p><b>ASIER SUÁREZ</b></p>
+                            <p><b>ASIER SUÁREZ UBIERNA</b></p>
                             <p>Desarrollo Android</p>
                         </div>
                     </div>
